@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Dark Theme defaults (active on :root / data-theme="dark") */
+  --bg-primary: #0a0e17;
+  --bg-secondary: #121826;
+  --bg-tertiary: #1b2336;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  --border-color: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(18, 24, 38, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  --accent-emerald: #10b981;
+  --accent-violet: #8b5cf6;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-blue: #3b82f6;
+
+  color-scheme: dark;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Light Theme overrides */
+:root[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --border-color: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+  
+  --accent-emerald: #059669;
+  --accent-violet: #7c3aed;
+  --accent-amber: #d97706;
+  --accent-rose: #e11d48;
+  --accent-blue: #2563eb;
+
+  color-scheme: light;
+}
+
+/* Color Accent Themes - Default Violet */
+:root {
+  --accent-primary: var(--accent-violet);
+  --accent-primary-hover: #7c3aed;
+  --accent-primary-glow: rgba(139, 92, 246, 0.15);
+  --accent-secondary: var(--accent-emerald);
+}
+
+:root[data-color-theme="violet"] {
+  --accent-primary: var(--accent-violet);
+  --accent-primary-hover: #7c3aed;
+  --accent-primary-glow: rgba(139, 92, 246, 0.15);
+  --accent-secondary: var(--accent-emerald);
+}
+:root[data-color-theme="emerald"] {
+  --accent-primary: var(--accent-emerald);
+  --accent-primary-hover: #059669;
+  --accent-primary-glow: rgba(16, 185, 129, 0.15);
+  --accent-secondary: var(--accent-amber);
+}
+:root[data-color-theme="amber"] {
+  --accent-primary: var(--accent-amber);
+  --accent-primary-hover: #d97706;
+  --accent-primary-glow: rgba(245, 158, 11, 0.15);
+  --accent-secondary: var(--accent-rose);
+}
+:root[data-color-theme="rose"] {
+  --accent-primary: var(--accent-rose);
+  --accent-primary-hover: #e11d48;
+  --accent-primary-glow: rgba(244, 63, 94, 0.15);
+  --accent-secondary: var(--accent-violet);
+}
+:root[data-color-theme="blue"] {
+  --accent-primary: var(--accent-blue);
+  --accent-primary-hover: #2563eb;
+  --accent-primary-glow: rgba(59, 130, 246, 0.15);
+  --accent-secondary: var(--accent-emerald);
+}
+:root[data-color-theme="instagram"] {
+  --accent-primary: #e1306c;
+  --accent-primary-hover: #c13584;
+  --accent-primary-glow: rgba(225, 48, 108, 0.2);
+  --accent-secondary: #5851db;
+  --accent-gradient: linear-gradient(45deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%);
+}
+
+/* Fine-tune light mode primary glows for readability */
+:root[data-theme="light"][data-color-theme="violet"] {
+  --accent-primary-hover: #6d28d9;
+  --accent-primary-glow: rgba(109, 40, 217, 0.1);
+}
+:root[data-theme="light"][data-color-theme="emerald"] {
+  --accent-primary-hover: #047857;
+  --accent-primary-glow: rgba(4, 120, 87, 0.1);
+}
+:root[data-theme="light"][data-color-theme="amber"] {
+  --accent-primary-hover: #b45309;
+  --accent-primary-glow: rgba(180, 83, 9, 0.1);
+}
+:root[data-theme="light"][data-color-theme="rose"] {
+  --accent-primary-hover: #be123c;
+  --accent-primary-glow: rgba(190, 18, 60, 0.1);
+}
+:root[data-theme="light"][data-color-theme="blue"] {
+  --accent-primary-hover: #1d4ed8;
+  --accent-primary-glow: rgba(29, 78, 216, 0.1);
+}
+:root[data-theme="light"][data-color-theme="instagram"] {
+  --accent-primary: #d62976;
+  --accent-primary-hover: #b01e6a;
+  --accent-primary-glow: rgba(214, 41, 118, 0.1);
+  --accent-secondary: #405de6;
+}
+
+/* Base resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Glassmorphism Class */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Neon Glow Effects */
+.glow-accent {
+  box-shadow: 0 0 20px var(--accent-primary-glow);
+}
+.glow-emerald {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+}
+.glow-violet {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+}
+
+/* Card Hover effect */
+.hover-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--accent-primary), 0.3);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Grid & Flex layouts */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

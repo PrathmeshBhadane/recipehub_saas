@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: recipehub-db
+    restart: always
+    environment:
+      POSTGRES_USER: recipeuser
+      POSTGRES_PASSWORD: recipepassword
+      POSTGRES_DB: recipehub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recipeuser -d recipehub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  cache:
+    image: redis:7-alpine
+    container_name: recipehub-cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: recipehub-backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://recipeuser:recipepassword@db:5432/recipehub
+      - REDIS_URL=redis://cache:6379/0
+      - JWT_SECRET=supersecretjwtkeyrecipehub2026version123
+      - AI_API_KEY=${AI_API_KEY}
+      - AI_BASE_URL=${AI_BASE_URL}
+      - AI_MODEL=${AI_MODEL}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/venv  # prevent overriding the virtualenv inside container
+      - uploads_data:/app/uploads
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: recipehub-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # prevent overriding node_modules inside container
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads_data:
